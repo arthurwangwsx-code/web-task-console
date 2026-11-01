@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Web Task Console — Controlled Browser",
+  "version": "0.3.0",
+  "minimum_chrome_version": "106",
+  "description": "Local intent queue and read-only observations. Native task/conversation identity is required; real sends fail closed without it.",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "optional_host_permissions": [
+    "https://chatgpt.com/*"
+  ],
+  "background": {
+    "service_worker": "background.mjs",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open Web Task Console"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+  },
+  "incognito": "not_allowed"
+}

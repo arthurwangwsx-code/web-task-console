@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Task Console · 受控网页桥接</title>
+<link rel="stylesheet" href="style.css"><script type="module" src="console.mjs"></script>
+</head>
+<body>
+<header><div><p class="eyebrow">LOCAL BROWSER CONTROL</p><h1>网页任务控制台</h1></div><span class="badge">严格绑定验证版 · 真实发送默认阻断</span></header>
+<main>
+<section class="intro"><div><h2>控制发送，不猜测完成。</h2><p>这是浏览器本地的编排意图与页面观察缓存，不是 WorkSpace 的任务权威账本。不会导出登录信息，不会自动重发或替你切换账号。</p></div><aside><strong>生产链路尚未验收</strong><p>当前 ChromeHost 缺少官方账号与原生消息 ID 证明接口，无法核验任务↔会话绑定；真实发送默认硬阻断。只读恢复或用户确认不能解锁发送。</p></aside></section>
+<section class="panel permission"><div><h2>1. 明确站点访问</h2><p id="permission-state" role="status">正在读取授权…</p><p class="hint">只申请 https://chatgpt.com/*。授权后也仅操作本扩展新建并登记的标签。</p></div><div class="actions"><button id="grant" type="button">授权 ChatGPT 站点</button><button id="revoke" type="button" class="secondary">撤销站点访问</button></div></section>
+<section class="notice warning"><strong>验证版：最多 2 个未核验真实任务。</strong> 当前没有权威 owner 自动完成接口，槽位不会自动释放。本版本不是可持续自动调度器。当前真实发送默认硬阻断；历史 unknown 仍需在原生 WorkSpace 外部核验。</section>
+<div id="connection" class="status" role="status">正在读取本地状态…</div>
+<div id="error" class="notice error" role="alert" hidden></div>
+<div id="unknown-warning" class="notice warning" hidden><strong>存在 unknown：发送是否发生尚不确定。</strong> 不要换键或新建意图重发同一任务。只读检查原聊天，并通过原生 WorkSpace 回执核查；关闭标签不等于取消任务。</div>
+<section class="metrics" aria-label="意图概览"><div><span>本地意图</span><strong id="total">0</strong></div><div><span>等待发送</span><strong id="queued">0</strong></div><div><span>不确定结果</span><strong id="unknown">0</strong></div><div><span>自有标签</span><strong id="tabs-count">0</strong></div></section>
+<div class="layout"><section class="panel"><h2>2. 创建发送意图</h2><form id="create-form"><label for="key">幂等键</label><div class="key-row"><input id="key" required maxlength="128" pattern="[A-Za-z0-9_.-]+" autocomplete="off"><button id="new-key" class="secondary" type="button">新键</button></div><p class="hint">同一任务保留原键；幂等键不是永久 exactly-once。</p><label for="prompt">准备发送的任务全文</label><textarea id="prompt" rows="9" required maxlength="16000" placeholder="填写具体任务、目标环境、授权范围和停止点。需要 WorkSpace 时，在网页中确认工具可用并按平台要求选择或提及它。"></textarea><p class="hint">普通文字 @WorkSpace 不保证已选择连接器；发送前到新建标签确认当前账号与工具。</p><details><summary>查看即将附加的可见关联标记</summary><pre id="marker-preview"></pre><p class="hint">标记用于关联页面发送记录，不是加密签名，也不能证明业务任务完成。</p></details><button type="submit">仅保存意图，不发送</button></form></section>
+<section class="panel"><div class="section-head"><div><h2>3. 逐项确认与观察</h2><p class="hint">先检查任务↔会话原生绑定。只有 ready、binding verified 且 dispatchValidated 为 true 才显示可用发送确认；重启后必须重新核验；当前真实宿主缺证明接口，不能安全点击发送。</p></div><button id="pause" type="button" class="secondary">暂停操作</button></div><div id="intents" aria-live="polite"></div></section></div>
+<section class="panel"><h2>自有标签登记</h2><p class="hint">不会枚举用户已有标签。刷新或重启会保留未知状态与保护；不自动重新绑定文档。</p><div id="tabs"></div></section>
+<details class="panel"><summary>容量与模式</summary><pre id="config"></pre></details>
+<footer>MIT · 浏览器本地存储 · 无 cookie/token 访问 · 页面 ACK ≠ 原生调用回执 ≠ producer 完成</footer>
+</main>
+</body></html>

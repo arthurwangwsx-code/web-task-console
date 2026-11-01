@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web Task Console · 本地任务控制台</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.mjs"></script></head>
+<body>
+<header><div class="brand"><span class="mark" aria-hidden="true">◎</span><div><p class="eyebrow">BROWSER CONTROL / LOCAL FIRST</p><h1>Web Task Console</h1></div></div><span class="badge demo">合成演示 · 不连接真实账号</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">任务不止是一条聊天消息</p><h2>看清发送，保留未知，<br>只相信业务回执。</h2><p>这个本地控制台记录编排意图与观察缓存，不是 WorkSpace 或业务任务的权威账本。</p></div><aside><strong>安全边界</strong><ul><li>入队不会发送；手动推进才处理合成任务。</li><li>unknown 只回查，不自动重发。</li><li>路由完成 ≠ 业务完成；关闭标签 ≠ 取消任务。</li></ul></aside></section>
+<div id="connection" class="connection" role="status">正在连接本地控制台…</div>
+<div id="error" class="notice error" role="alert" hidden></div>
+<section id="unknown-warning" class="notice warning" hidden><strong>存在发送结果不明的任务。</strong> 不要换幂等键重发。使用「只读回查」核对原任务；不确定状态会继续保留容量和标签保护。</section>
+<section class="metrics" aria-label="概览"><article><span>本地意图</span><strong id="metric-total">0</strong></article><article><span>排队等待</span><strong id="metric-queued">0</strong></article><article><span>结果不明</span><strong id="metric-unknown">0</strong></article><article><span>受管标签</span><strong id="metric-tabs">0</strong></article></section>
+<div class="workspace"><section class="panel compose"><div class="section-head"><h2>新建编排意图</h2><span class="subtle">仅合成数据</span></div><form id="intent-form"><label for="key">幂等键</label><div class="key-row"><input id="key" name="key" maxlength="128" required autocomplete="off"><button type="button" id="new-key" class="secondary">新键</button></div><p class="hint">相同任务保留原键；幂等键不代表永久 exactly-once。</p><label for="prompt">多行任务内容</label><textarea id="prompt" name="prompt" rows="6" maxlength="16000" required>这是一个合成验证任务。
+请保留第二行与换行，不访问真实账号。</textarea><button id="enqueue" type="submit">仅加入队列</button></form><div class="scenario"><label for="scenario">下次合成派发的故障场景</label><select id="scenario"><option value="success">正常：路由与业务均完成</option><option value="lost-ack">丢 ACK：已发送但应答丢失</option><option value="router-only">仅路由完成：业务仍在运行</option><option value="provider-failure">业务失败：不能冒充成功</option></select><p class="hint">模拟器不调用 ChatGPT、WorkSpace 或外部网站。</p></div></section>
+<section class="panel queue"><div class="section-head"><div><h2>编排队列</h2><p class="hint">每次推进只执行核心调度器允许的工作。</p></div><div class="actions"><button id="pause" class="secondary" type="button">暂停调度</button><button id="tick" type="button">推进一步</button></div></div><div id="intents" aria-live="polite"></div></section></div>
+<section class="panel tabs"><div class="section-head"><div><h2>受管标签</h2><p class="hint">这里只显示适配器创建并登记的标签；活跃或未知任务的标签禁止关闭。</p></div></div><div id="tabs"></div></section>
+<details class="panel"><summary>当前容量与观察指标</summary><pre id="diagnostics"></pre></details>
+<footer>本地观察缓存 · 无真实平台端到端验证 · 不读取 cookie / token · 不自动外发</footer>
+</main>
+</body></html>
