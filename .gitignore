@@ -1,0 +1,19 @@
+node_modules/
+.data/
+.local-data/
+artifacts/
+*.log
+.env*
+*.sqlite*
+*.lock.tmp
+coverage/
+dist/
+.deployment-owner.json
+# Local extension packages and signing material are never source artifacts.
+*.crx
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
